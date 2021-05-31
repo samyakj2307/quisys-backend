@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const port = process.env.PORT || 3000;
 
 const app = express();
-process.setMaxListeners(0); //due to memory leak yeh add karna pada
+process.setMaxListeners(0); //due to memory leak
 
 app.use(bodyParser.json());
 
@@ -376,32 +376,6 @@ app.post("/studentAddClass", (req, res) => {
     .catch((e) => res.status(400).send("Invalid Class ID"));
 });
 
-// {
-//   "studentId":"60afd6072da440492056f555",
-//   "examId":"60afbc3ef17b5d0fdc93be9e",
-//   "studentAnswerSheet":[
-//       {
-//           "questionId":"60afc50124059e354c5be6f5",
-//            "question":"hdjfshfkjsd"
-//           "answered":"Hello"
-//       }
-//   ]
-// }
-
-// {
-//   "sid":"60b10224bb51af3a681c8ae1",
-//   "eid":"60afbc3ef17b5d0fdc93be9e",
-//   "totalMarks":10,
-//   "studentAnswerSheet":[
-//       {
-//           "_id": "60b10a96f55da554e40f540a",
-//           "questionId":"60afc50124059e354c5be6f5",
-//           "answered": "Hello",
-//           "marksAwarded":0
-//       }
-//   ]
-// }
-
 app.get("/getStudentAllClass", (req, res) => {
   //sid
   Student.findById(req.query.sid)
@@ -462,103 +436,8 @@ app.post("/submitExam", (req, res) => {
   });
 });
 
-app.get("/sendMail", (req, res) => {
-
-var transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: '',
-    pass: ''
-  }
-
-});
-
-
-
-  var mailOptions = {
-    from: "quisys.exam@gmail.com",
-    to: "",
-    subject: "You have failed in exam",
-    attachments: [{
-      filename: 'quisysLogo.png',
-      path: __dirname +'/quisysLogo.png',
-      cid: 'logo' //my mistake was putting "cid:logo@cid" here! 
- }],
-    html:
-      "<body>" +
-      "<h1>You have failed in exam</h1>" +
-      '<img src="cid:logo">'+
-      "<h2>This is regarding your quiz you gave in quisys platform</h2>" +
-      "<h4>I regret to inform you that you have scored terrible!!! <br> i am afraid you may no longer continue your studies in VIT</h4>" +
-      "<h3> Contact your HOD Mr. Swapna Sambhav Nayak or your Dean Mr. Samyak Jain to check your marks</h3>" +
-      "<p> <strong>quisys</strong> is a very popular platform for conducting quizzes </p>" +
-      "</body>",
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-});
-
-// {
-//   "studentId":"60afbc3ef17b5d0fdc93be9e",
-//   "examId":"60afbc3ef17b5d0fdc93be9e",
-//   "studentAnswerSheet":[
-//       {
-//           "questionId":"60afc50124059e354c5be6f5",
-//           "answered":"Hello"
-//       }
-//   ]
-
-// }
-
 ////////////////////////// Student Get Post END   ///////////////////////////////////////////////
 
 app.listen(3000, function () {
   console.log(`Server started on port ${port}`);
 });
-
-// {
-//   "fid":"60ae7480ac19e6240ce6c9fa",
-//   "cid":"60ae74ec2c71d342c030d4e9",
-// "examDetails":{
-//     "examName":"IPWT Quiz 1",
-//     "duration":"3",
-//     "date": "24-04-2022",
-//     "startTime": "04:00:00",
-//     "endTime": "05:00:00",
-//     "isCompleted": false,
-//     "allQuestions": [{
-//         "question":"sdfsdksjfkldsjds",
-//         "isText":false,
-//         "options":[{
-//             "value":"Hello"
-//         },
-//         {
-//             "value":"Hi"
-//         }]
-//     }]
-
-//   }
-// }
-
-// {
-//   "fid":"60ae81e004056213045d74d0",
-//   "cname": "STS Class"
-// }
-
-// {
-//   "name":"Sam",
-//   "email":"sdjfklsf",
-//   "password": "fjsdlkf"
-// }
-
-// fid 60ae826efc829f0fecf9969a
-// cid 60ae82b389940718f4a4411f
