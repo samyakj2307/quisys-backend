@@ -470,22 +470,17 @@ var transporter = nodemailer.createTransport({
   secure: false,
   requireTLS: true,
   auth: {
-    user: 'quisys.exam@gmail.com',
-    pass: 'Quisys@123'
+    user: '',
+    pass: ''
   }
 
 });
 
-// var mailOptions = {
-//   from: 'quisys.exam@gmail.com',
-//   to: 'jainsamyak230701@gmail.com',
-//   subject: 'Sending Email using Node.js',
-//   text: `That was easy!`
-// };
-  // // 
+
+
   var mailOptions = {
     from: "quisys.exam@gmail.com",
-    to: "jainsamyak230701@gmail.com,manan.jain2019@vitstudent.ac.in",
+    to: "",
     subject: "You have failed in exam",
     attachments: [{
       filename: 'quisysLogo.png',
